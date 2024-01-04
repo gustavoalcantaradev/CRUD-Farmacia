@@ -34,7 +34,8 @@ public class CategoriaController {
 	// Buscando todas as categorias
 	@GetMapping 
 	public ResponseEntity<List<Categoria>>getAll(){
-		return ResponseEntity.ok(categoriaRepository.findAll());		
+		return ResponseEntity.ok(categoriaRepository.findAll());
+		
 	}
 	
 	// Procurando por id
@@ -43,12 +44,14 @@ public class CategoriaController {
 		return categoriaRepository.findById(id)
 		.map (resposta -> ResponseEntity.ok(resposta))
 		.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());		
+	
 	}
 	
 	// Procurando por nome
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome){
 		return ResponseEntity.ok(categoriaRepository.findAllByNomeContainingIgnoreCase(nome));
+	
 	}
 	
 	// Criando categoria
@@ -56,6 +59,7 @@ public class CategoriaController {
 	public ResponseEntity<Categoria> post (@Valid @RequestBody Categoria categoria) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(categoriaRepository.save(categoria));
+	
 	}
 	
 	//Atualizando categoria
@@ -65,6 +69,7 @@ public class CategoriaController {
 				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED)
 				.body(categoriaRepository.save(categoria)))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	
 	}
 	
 	//Deletando categoria
@@ -77,5 +82,5 @@ public class CategoriaController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		categoriaRepository.deleteById(id);
 				
-		}
+	}
 }
